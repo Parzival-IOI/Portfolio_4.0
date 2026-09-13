@@ -1,0 +1,115 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/**
+ * Blue-accent palette (structure follows DESIGN-binance.md's layout/spacing
+ * system, but the brand accent is blue rather than Binance yellow).
+ * One accent carries every primary CTA and the brand mark.
+ * Inter and IBM Plex Sans are the documented open-source substitutes for
+ * BinanceNova (copy) and BinancePlex (numbers).
+ */
+@theme static {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-numeric: 'IBM Plex Sans', 'Inter', sans-serif;
+
+  /* Brand blue ramp — 500 is the brand token, 600 the pressed state */
+  --color-brand-50: #EFF6FF;
+  --color-brand-100: #DBEAFE;
+  --color-brand-200: #BFDBFE;
+  --color-brand-300: #93C5FD;
+  --color-brand-400: #60A5FA;
+  --color-brand-500: #3B82F6;
+  --color-brand-600: #2563EB;
+  --color-brand-700: #1D4ED8;
+  --color-brand-800: #1E40AF;
+  --color-brand-900: #1E3A8A;
+  --color-brand-950: #172554;
+
+  /* Canvas / surface tones, dark side */
+  --color-ink-50: #EAECEF;
+  --color-ink-100: #C7CDD5;
+  --color-ink-200: #929AA5;
+  --color-ink-300: #707A8A;
+  --color-ink-400: #5E6673;
+  --color-ink-500: #474D57;
+  --color-ink-600: #2B3139;
+  --color-ink-700: #1E2329;
+  --color-ink-800: #181A20;
+  --color-ink-900: #0B0E11;
+  --color-ink-950: #05070A;
+
+  /* Trading semantics — price direction only, never generic success/error */
+  --color-trading-up: #0ECB81;
+  --color-trading-down: #F6465D;
+}
+
+:root {
+  --ui-radius: 0.375rem; /* 6px — the design's standard CTA radius */
+}
+
+/* Deep near-black canvas rather than Tailwind's default zinc-950 */
+.dark {
+  --ui-bg: var(--color-ink-900);
+  --ui-bg-muted: var(--color-ink-800);
+  --ui-bg-elevated: var(--color-ink-700);
+  --ui-bg-accented: var(--color-ink-600);
+  --ui-border: var(--color-ink-600);
+  --ui-border-muted: var(--color-ink-700);
+  --ui-text: var(--color-ink-50);
+  --ui-text-muted: var(--color-ink-300);
+}
+
+/* Numbers use the tabular face, per the design system's Nova/Plex split */
+.font-numeric {
+  font-family: var(--font-numeric);
+  font-variant-numeric: tabular-nums;
+}
+
+/**
+ * Rendered Markdown post bodies (MarkdownBody.vue).
+ * Lives here rather than in a scoped block so Tailwind 4 can resolve @apply
+ * against the theme without an @reference import in every component.
+ */
+.markdown-body h2 {
+  @apply text-2xl font-semibold tracking-tight text-highlighted mt-12 mb-4;
+}
+.markdown-body h3 {
+  @apply text-xl font-semibold tracking-tight text-highlighted mt-8 mb-3;
+}
+.markdown-body p {
+  @apply leading-7 my-4 text-muted;
+}
+.markdown-body a {
+  @apply text-primary underline-offset-4 hover:underline;
+}
+.markdown-body ul {
+  @apply list-disc ps-6 my-4 space-y-2 text-muted;
+}
+.markdown-body ol {
+  @apply list-decimal ps-6 my-4 space-y-2 text-muted;
+}
+.markdown-body blockquote {
+  @apply border-s-2 border-primary ps-4 italic my-6 text-muted;
+}
+.markdown-body code {
+  @apply rounded bg-elevated px-1.5 py-0.5 text-sm font-mono text-highlighted;
+}
+.markdown-body pre {
+  @apply rounded-xl bg-elevated p-4 overflow-x-auto my-6 text-sm;
+}
+.markdown-body pre code {
+  @apply bg-transparent p-0;
+}
+.markdown-body img {
+  @apply rounded-xl my-6 max-w-full;
+}
+.markdown-body hr {
+  @apply border-default my-10;
+}
+.markdown-body table {
+  @apply w-full text-sm my-6;
+}
+.markdown-body th,
+.markdown-body td {
+  @apply border-b border-default py-2 px-3 text-start;
+}
