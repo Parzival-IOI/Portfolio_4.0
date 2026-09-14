@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { site } from '~/config/site'
 import type { ApiPage, BlogListItem } from '~/types/blog'
 
 const { api } = useApi()
@@ -27,13 +28,34 @@ useSeoMeta({
 </script>
 
 <template>
-  <UContainer class="py-16 sm:py-20">
+  <UContainer class="relative py-16 sm:py-20">
+    <!-- Charizard keeps watch over the blog. -->
+    <PokemonSprite
+      :src="site.pokemon.charizard"
+      size="size-16"
+      class="top-43 right-24"
+    />
+
     <UPageHeader
       title="Blog"
       description="Writing on web development, APIs, and the things that break in production."
     />
 
-    <div class="mt-12">
+    <div class="relative mt-12">
+      <!-- Hawlucha, perched above the posts grid. -->
+      <PokemonSprite
+        :src="site.pokemon.hawlucha"
+        size="size-12"
+        flip
+        class="-top-10 left-0"
+      />
+      <!-- Pikachu, running toward whatever's next. -->
+      <PokemonSprite
+        :src="site.pokemon.pikachu"
+        size="size-10"
+        flip
+        class="-bottom-10 right-0"
+      />
       <div
         v-if="status === 'pending'"
         class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"

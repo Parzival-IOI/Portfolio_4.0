@@ -1,0 +1,18 @@
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio
+    ports:
+      - 3000:3000
+    environment:
+      # This is used by BOTH the browser and the server-rendered fetch inside
+      # this container - "localhost" would point at the container itself for
+      # the latter, so it targets the host machine instead. Override to a
+      # real API host at deploy time. `extra_hosts` below makes
+      # host.docker.internal resolve on Linux too (Docker Desktop on
+      # Mac/Windows already provides it).
+      - NUXT_PUBLIC_API_BASE=http://host.docker.internal:4000/v1/api
+    extra_hosts:
+      - host.docker.internal:host-gateway

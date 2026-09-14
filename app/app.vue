@@ -6,7 +6,9 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
   ],
   link: [
-    { rel: 'icon', href: '/favicon.ico' }
+    { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+    { rel: 'icon', href: '/icon.svg', type: 'image/svg+xml' },
+    { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }
   ],
   htmlAttrs: {
     lang: 'en'
@@ -14,22 +16,28 @@ useHead({
 })
 
 useSeoMeta({
-  title: `${site.name} — ${site.role}`,
+  title: `${site.name} - ${site.role}`,
   description: site.tagline,
-  ogTitle: `${site.name} — ${site.role}`,
+  ogTitle: `${site.name} - ${site.role}`,
   ogDescription: site.tagline,
   twitterCard: 'summary_large_image'
 })
 
 const navigation = [
-  { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
-  { label: 'Blog', to: '/blog' }
+  { label: 'Home', to: '/', icon: 'i-lucide-house' },
+  { label: 'About', to: '/about', icon: 'i-lucide-user-round' },
+  { label: 'Blog', to: '/blog', icon: 'i-lucide-pen-line' }
 ]
+
+const colorMode = useColorMode()
 </script>
 
 <template>
   <UApp>
+    <ClientOnly>
+      <PokemonRoam />
+    </ClientOnly>
+
     <UHeader :ui="{ root: 'border-default' }">
       <template #left>
         <NuxtLink
@@ -44,7 +52,18 @@ const navigation = [
       <UNavigationMenu :items="navigation" />
 
       <template #right>
-        <UColorModeButton />
+        <span class="relative inline-flex">
+          <UColorModeButton />
+          <!-- Gengar is a ghost type - he only shows up lurking in the shadow of the dark-mode toggle. -->
+          <ClientOnly>
+            <PokemonSprite
+              v-if="colorMode.value === 'dark'"
+              :src="site.pokemon.gengar"
+              size="size-8"
+              class="-bottom-4 -right-6 z-10"
+            />
+          </ClientOnly>
+        </span>
 
         <UButton
           v-for="social in site.socials"
@@ -70,7 +89,26 @@ const navigation = [
         <UNavigationMenu
           :items="navigation"
           orientation="vertical"
+          class="-mx-2.5"
         />
+
+        <USeparator class="my-6" />
+
+        <!-- The header's right slot hides these below `sm`, so they'd
+             otherwise be unreachable on mobile even with the menu open. -->
+        <div class="flex items-center justify-center gap-2">
+          <UButton
+            v-for="social in site.socials"
+            :key="social.label"
+            :to="social.to"
+            target="_blank"
+            rel="noopener"
+            :icon="social.icon"
+            :label="social.label"
+            color="neutral"
+            variant="ghost"
+          />
+        </div>
       </template>
     </UHeader>
 
@@ -85,7 +123,7 @@ const navigation = [
             <div class="space-y-3">
               <AppLogo />
               <p class="text-sm text-muted max-w-xs">
-                {{ site.tagline }}
+                {{ site.footerBlurb }}
               </p>
             </div>
 
@@ -146,9 +184,18 @@ const navigation = [
       </template>
 
       <template #left>
-        <p class="text-sm text-muted">
-          © {{ new Date().getFullYear() }} {{ site.name }}
-        </p>
+        <div class="relative flex items-center ps-9">
+          <!-- Snorlax is famous for blocking the way and refusing to move - fitting, on the copyright line. -->
+          <PokemonSprite
+            :src="site.pokemon.snorlax"
+            size="size-9"
+            flip
+            class="top-1/2 left-0 -translate-y-1/2"
+          />
+          <p class="text-sm text-muted">
+            © {{ new Date().getFullYear() }} {{ site.name }}
+          </p>
+        </div>
       </template>
     </UFooter>
   </UApp>

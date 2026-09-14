@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { site } from '~/config/site'
 import type { BlogPostDetail } from '~/types/blog'
 
 const route = useRoute()
@@ -36,19 +37,34 @@ const publishedAt = computed(() =>
 <template>
   <UContainer
     v-if="post"
-    class="py-16 sm:py-20 max-w-3xl"
+    class="relative py-16 sm:py-20 max-w-3xl"
   >
-    <UButton
-      to="/blog"
-      label="All posts"
-      icon="i-lucide-arrow-left"
-      variant="link"
-      color="neutral"
-      class="-ms-3 mb-6"
-    />
+    <div class="relative">
+      <!-- Pikachu, running back toward the post list. -->
+      <PokemonSprite
+        :src="site.pokemon.pikachu"
+        size="size-9"
+        flip
+        class="top-0 left-20 sm:left-24"
+      />
+      <UButton
+        to="/blog"
+        label="All posts"
+        icon="i-lucide-arrow-left"
+        variant="link"
+        color="neutral"
+        class="-ms-3 mb-6"
+      />
+    </div>
 
     <article>
-      <header class="space-y-4">
+      <header class="relative space-y-4">
+        <!-- Hawlucha, perched by the post title. -->
+        <PokemonSprite
+          :src="site.pokemon.hawlucha"
+          size="size-12"
+          class="top-0 right-0"
+        />
         <p class="text-sm text-muted font-numeric">
           {{ publishedAt }}
         </p>
@@ -80,11 +96,20 @@ const publishedAt = computed(() =>
 
     <USeparator class="my-12" />
 
-    <UPageCTA
-      title="Enjoyed this?"
-      description="I write about what I build. Reach out if you want to talk about it."
-      variant="subtle"
-      :links="[{ label: 'Get in touch', to: '/#contact', icon: 'i-lucide-mail' }]"
-    />
+    <div class="relative">
+      <!-- Charizard stands guard on top of the CTA, same as on the home page. -->
+      <PokemonSprite
+        :src="site.pokemon.charizard"
+        size="size-16"
+        flip
+        class="-top-8 right-6"
+      />
+      <UPageCTA
+        title="Enjoyed this?"
+        description="I write about what I build. Reach out if you want to talk about it."
+        variant="subtle"
+        :links="[{ label: 'Get in touch', to: '/#contact', icon: 'i-lucide-mail' }]"
+      />
+    </div>
   </UContainer>
 </template>

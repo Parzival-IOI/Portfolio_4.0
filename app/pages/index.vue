@@ -18,6 +18,7 @@ const { coverUrl } = useCoverImage()
     <UPageHero
       :title="site.name"
       :description="site.tagline"
+      orientation="horizontal"
       :ui="{ title: 'text-5xl sm:text-6xl font-bold tracking-tight', container: 'py-20 sm:py-28' }"
       :links="[{
         label: 'Read the blog',
@@ -42,10 +43,31 @@ const { coverUrl } = useCoverImage()
           size="lg"
         />
       </template>
+
+      <!-- Mobile: photo first, above the text (order-first). Desktop: back to its
+           natural side-by-side spot next to the text (lg:order-none). -->
+      <div class="order-first flex justify-center lg:order-none">
+        <div class="relative">
+          <ProfileAvatar size="size-56 lg:size-72" />
+          <!-- Hawlucha's a wrestler - flying kick into frame next to the photo. -->
+          <PokemonSprite
+            :src="site.pokemon.hawlucha"
+            size="size-14"
+            flip
+            class="bottom-4 -left-20"
+          />
+        </div>
+      </div>
     </UPageHero>
 
-    <UContainer class="pb-16">
+    <UContainer class="relative pb-16">
       <TechMarquee />
+      <!-- Pikachu runs alongside the scrolling tech marquee. -->
+      <PokemonSprite
+        :src="site.pokemon.pikachu"
+        size="size-10"
+        class="-top-7.5 left-44"
+      />
     </UContainer>
 
     <UPageSection
@@ -57,7 +79,7 @@ const { coverUrl } = useCoverImage()
     <UPageSection
       v-if="latest?.items?.length"
       title="Latest writing"
-      description="Notes on the things I build and the problems they turned out to hide."
+      description="Half-baked opinions about software, lightly edited to look intentional."
       :ui="{ container: 'pt-0' }"
     >
       <UBlogPosts>
@@ -82,10 +104,16 @@ const { coverUrl } = useCoverImage()
       </div>
     </UPageSection>
 
-    <UContainer class="pb-20">
+    <UContainer class="relative pb-20">
+      <!-- Charizard stands guard on top of the "hire me" card. -->
+      <PokemonSprite
+        :src="site.pokemon.charizard"
+        size="size-20"
+        class="-top-17.5 right-10 z-10"
+      />
       <UPageCTA
         title="Have something you want built?"
-        :description="`The fastest way to reach me is email — ${site.email}.`"
+        :description="`Email me at ${site.email} - I promise to reply faster than my code compiles.`"
         variant="subtle"
         :links="[{
           label: 'Get in touch',

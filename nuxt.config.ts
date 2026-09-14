@@ -9,6 +9,10 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  app: {
+    buildAssetsDir: '/_app/'
+  },
+
   css: ['~/assets/css/main.css'],
 
   colorMode: {
@@ -18,7 +22,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      // NestBackend base URL — override with NUXT_PUBLIC_API_BASE in production
+      // NestBackend base URL - override with NUXT_PUBLIC_API_BASE in production
       apiBase: 'http://localhost:4000/v1/api'
     }
   },
