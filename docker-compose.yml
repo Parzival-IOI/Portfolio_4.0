@@ -22,3 +22,4 @@ services:
 
 networks:
   tunnelnet:
+    external: true
