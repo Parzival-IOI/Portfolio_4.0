@@ -19,6 +19,7 @@ const { coverUrl } = useCoverImage()
       :title="site.name"
       :description="site.tagline"
       orientation="horizontal"
+      class="relative isolate"
       :ui="{ title: 'text-5xl sm:text-6xl font-bold tracking-tight', container: 'py-20 sm:py-28' }"
       :links="[{
         label: 'Read the blog',
@@ -36,6 +37,12 @@ const { coverUrl } = useCoverImage()
         variant: 'subtle'
       }]"
     >
+      <template #top>
+        <ClientOnly>
+          <GlyphRain />
+        </ClientOnly>
+      </template>
+
       <template #headline>
         <UBadge
           :label="site.role"

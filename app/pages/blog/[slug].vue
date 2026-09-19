@@ -91,7 +91,7 @@ const publishedAt = computed(() =>
         class="my-10"
       />
 
-      <MarkdownBody :source="post.description" />
+      <PostBody :source="post.description" />
     </article>
 
     <USeparator class="my-12" />
