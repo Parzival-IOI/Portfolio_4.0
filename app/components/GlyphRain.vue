@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GlyphRainInstance, GlyphRainOptions } from '~/utils/glyph-rain'
+import type { GlyphRainInstance, GlyphRainOptions } from '../utils/glyph-rain'
 
 // Drop this as the first child of a `relative isolate` section. It paints the
 // rain behind the section's content and fades it out as the section scrolls
