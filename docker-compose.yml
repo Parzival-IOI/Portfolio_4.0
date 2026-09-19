@@ -17,3 +17,8 @@ services:
       - NUXT_PUBLIC_API_BASE=http://host.docker.internal:4000/v1/api
     extra_hosts:
       - host.docker.internal:host-gateway
+    networks:
+      - tunnelnet
+
+networks:
+  tunnelnet:
