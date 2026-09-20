@@ -2,24 +2,18 @@
 import { site } from '~/config/site'
 import type { ApiPage, BlogListItem } from '~/types/blog'
 
-const { api } = useApi()
 const { coverUrl } = useCoverImage()
 
 const PAGE_SIZE = 9
 const page = ref(1)
 
-const { data, status } = await useAsyncData(
-  'blog-list',
-  () => api<ApiPage<BlogListItem>>('/blog/findAll', {
-    query: {
-      orderBy: 'DESC',
-      sortBy: 'CREATED_AT',
-      page: String(page.value - 1),
-      size: String(PAGE_SIZE)
-    }
-  }),
-  { watch: [page] }
-)
+// Same-origin call to our Nuxt server route (which signs the request to Nest).
+// Server-rendered on first load; the reactive `page` in the query refetches
+// from the browser when paginating.
+const { data, status } = await useFetch<ApiPage<BlogListItem>>('/api/blog', {
+  key: 'blog-list',
+  query: { page, size: PAGE_SIZE }
+})
 
 useSeoMeta({
   title: 'Blog',

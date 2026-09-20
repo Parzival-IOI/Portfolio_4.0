@@ -7,14 +7,15 @@ services:
     restart: unless-stopped
     ports:
       - 3001:3000
+    # NUXT_BLOG_HMAC_SECRET comes from ./.env - copy .env.example first.
+    env_file:
+      - .env
     environment:
-      # This is used by BOTH the browser and the server-rendered fetch inside
-      # this container - "localhost" would point at the container itself for
-      # the latter, so it targets the host machine instead. Override to a
-      # real API host at deploy time. `extra_hosts` below makes
-      # host.docker.internal resolve on Linux too (Docker Desktop on
-      # Mac/Windows already provides it).
-      - NUXT_PUBLIC_API_BASE=http://host.docker.internal:4000/v1/api
+      # Server-side calls to Nest happen inside this container, where
+      # "localhost" is the container itself - so target the host machine.
+      # `extra_hosts` below makes host.docker.internal resolve on Linux too
+      # (Docker Desktop on Mac/Windows already provides it).
+      - NUXT_NEST_API_URL=http://host.docker.internal:4000/v1/api
     extra_hosts:
       - host.docker.internal:host-gateway
     networks:

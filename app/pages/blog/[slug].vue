@@ -3,15 +3,17 @@ import { site } from '~/config/site'
 import type { BlogPostDetail } from '~/types/blog'
 
 const route = useRoute()
-const { api } = useApi()
 const { coverUrl } = useCoverImage()
 
 const slug = computed(() => String(route.params.slug))
 
-const { data: post } = await useAsyncData(
-  () => `blog-${slug.value}`,
-  () => api<BlogPostDetail>(`/blog/findBySlug/${slug.value}`)
-)
+const { data: post, error } = await useFetch<BlogPostDetail>(() => `/api/blog/${slug.value}`, {
+  key: () => `blog-${slug.value}`
+})
+
+if (error.value?.statusCode && error.value.statusCode !== 404) {
+  throw createError({ statusCode: error.value.statusCode, statusMessage: 'The blog service is unavailable', fatal: true })
+}
 
 if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found', fatal: true })
@@ -22,7 +24,8 @@ useSeoMeta({
   description: post.value.excerpt ?? undefined,
   ogTitle: post.value.title,
   ogDescription: post.value.excerpt ?? undefined,
-  ogImage: coverUrl(post.value.coverImage)
+  // og:image must be an absolute URL, and the cover is now a same-origin path
+  ogImage: coverUrl(post.value.coverImage) && new URL(coverUrl(post.value.coverImage)!, useRequestURL().origin).href
 })
 
 const publishedAt = computed(() =>

@@ -2,13 +2,12 @@
 import { site } from '~/config/site'
 import type { ApiPage, BlogListItem } from '~/types/blog'
 
-const { api } = useApi()
-
-const { data: latest } = await useAsyncData('latest-posts', () =>
-  api<ApiPage<BlogListItem>>('/blog/findAll', {
-    query: { orderBy: 'DESC', sortBy: 'CREATED_AT', page: '0', size: '3' }
-  }).catch(() => ({ items: [], page: 0, total: 0 }) as ApiPage<BlogListItem>)
-)
+// Fetched through our own Nuxt server route (which signs the call to Nest), so
+// this is rendered on the server and shipped in the HTML.
+const { data: latest } = await useFetch<ApiPage<BlogListItem>>('/api/blog', {
+  key: 'latest-posts',
+  query: { page: 1, size: 3 }
+})
 
 const { coverUrl } = useCoverImage()
 </script>
