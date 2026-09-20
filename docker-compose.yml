@@ -1,3 +1,10 @@
+# Networks (created once per host, outside this file):
+#   docker network create portfolio-internal
+#   tunnelnet - already exists; cloudflared lives on it
+#
+#   portfolio-internal - the Nuxt server reaches the API here (http://nest-api:5000)
+#   tunnelnet          - what the Cloudflare tunnel connects through
+#                        (public hostname service URL: http://portfolio:3000)
 services:
   portfolio:
     build:
@@ -6,21 +13,21 @@ services:
     container_name: portfolio
     restart: unless-stopped
     ports:
-      - 3001:3000
+      # Loopback only - the public path is the tunnel, not a host port.
+      - 127.0.0.1:3001:3000
     # NUXT_BLOG_HMAC_SECRET comes from ./.env - copy .env.example first.
     env_file:
       - .env
     environment:
-      # Server-side calls to Nest happen inside this container, where
-      # "localhost" is the container itself - so target the host machine.
-      # `extra_hosts` below makes host.docker.internal resolve on Linux too
-      # (Docker Desktop on Mac/Windows already provides it).
-      - NUXT_NEST_API_URL=http://host.docker.internal:4000/v1/api
-    extra_hosts:
-      - host.docker.internal:host-gateway
+      # Server-side calls to Nest stay on the internal network. This value wins
+      # over the localhost one in .env (that's for `pnpm dev` on the host).
+      - NUXT_NEST_API_URL=http://nest-api:5000/v1/api
     networks:
+      - portfolio-internal
       - tunnelnet
 
 networks:
+  portfolio-internal:
+    external: true
   tunnelnet:
     external: true
