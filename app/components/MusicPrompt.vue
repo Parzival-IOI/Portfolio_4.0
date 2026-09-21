@@ -39,7 +39,7 @@ onBeforeUnmount(() => cancelPrompt())
             {{ TRACK.artist }} - {{ TRACK.title }}
           </p>
           <p class="text-sm text-muted">
-            Say yes and the whole site gets a warm, grainy film-camera makeover - fonts and words included. Say no and nothing changes - I'll sulk quietly.
+            Say yes and the whole site slips into a warm, nostalgic look - fonts and words included. Say no and nothing changes.
           </p>
         </div>
       </div>

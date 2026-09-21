@@ -45,8 +45,21 @@ export interface GlyphRainInstance {
   destroy: () => void
 }
 
+// Katakana + digits + symbols (the classic look) plus Khmer: the 33 consonants,
+// the 14 independent vowels and the Khmer digits. Dependent vowel signs and
+// subscript marks are left out on purpose - they only make sense attached to a
+// consonant and would draw as broken dotted circles when placed alone in a cell.
 const DEFAULT_CHARSET
   = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789Z*+-<>¦=:.'
+    + 'កខគឃងចឆជឈញដឋឌឍណតថទធនបផពភមយរលវសហឡអ'
+    + 'ឥឦឧឩឪឫឬឭឮឯឰឱឲឳ'
+    + '០១២៣៤៥៦៧៨៩'
+
+// Latin/katakana fall back per-glyph, so the stack just needs a Khmer-capable
+// face after the monospace ones: Noto (Android/Linux), Khmer Sangam MN (macOS/iOS),
+// Leelawadee UI / Khmer UI (Windows).
+const ATLAS_FONT_STACK
+  = 'ui-monospace, SFMono-Regular, Menlo, monospace, \'Noto Sans Khmer\', \'Khmer Sangam MN\', \'Leelawadee UI\', \'Khmer UI\', \'Khmer OS\''
 
 const DEFAULTS: Required<GlyphRainOptions> = {
   charset: DEFAULT_CHARSET,
@@ -192,7 +205,7 @@ function buildAtlas(charset: string) {
   ctx.fillStyle = '#ffffff'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
-  ctx.font = `600 ${Math.round(cellPx * 0.72)}px ui-monospace, SFMono-Regular, Menlo, monospace`
+  ctx.font = `600 ${Math.round(cellPx * 0.72)}px ${ATLAS_FONT_STACK}`
   glyphs.forEach((glyph, i) => {
     ctx.fillText(glyph, ((i % grid) + 0.5) * cellPx, (Math.floor(i / grid) + 0.5) * cellPx)
   })

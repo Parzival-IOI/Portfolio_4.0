@@ -3,8 +3,8 @@ import { site } from './site'
 /**
  * Site wording, in two versions side by side: `baseCopy` is the everyday text
  * (unchanged - it's pulled from site.ts / the pages as they were), `filmCopy` is
- * the same jokes with a nostalgic film-and-tape twist layered on top, shown only
- * while the music/film theme is on. Edit either freely; useCopy() picks one.
+ * the same content in a sincere, warm, nostalgic voice (no jokes - the humor is
+ * the everyday theme's job - and no camera/film talk, just nostalgia), shown only while the music/film theme is on. Edit either freely; useCopy() picks one.
  *
  * Not covered on purpose: job/education facts, nav labels, real error messages
  * and SEO meta (the server renders `baseCopy`, so search/OG text stays stable).
@@ -32,27 +32,26 @@ export type Copy = typeof baseCopy
 
 export const filmCopy: Copy = {
   heroTagline:
-    'I write code that mostly works on the first try, ship it anyway, and fix the rest at 2am like a photo developing in the dark - calling it "iteration." Nuxt, Vue, NestJS, Postgres: the full cursed stack, shot on 35mm.',
-  heroBlogButton: 'Flip through the blog',
+    'Full-stack developer, building for the web the way good things used to be made: with care, patience, and time for the details. Nuxt, Vue, NestJS and Postgres, made to last.',
+  heroBlogButton: 'Wander through the blog',
   whatIDoIntro:
-    'I turn coffee into typed APIs and vague briefs into things that actually load, the way a mixtape turned an afternoon into a memory. Bugs aren\'t bugs, they\'re undocumented features I haven\'t gotten around to developing yet.',
+    'Like the mixtapes we kept and the letters we saved, good software is made to be remembered. I turn ideas into typed APIs and interfaces that load quickly and feel considered.',
   serviceDescriptions: [
-    'Nuxt 4 interfaces that don\'t apologize for existing on a mid-range phone. Accessible, responsive, and fast, mostly on purpose - crisp like a fresh roll of film.',
-    'NestJS and Drizzle services with DTOs strict enough to reject your typos before the database has to, like a projectionist who never lets a bad reel through.',
-    'I find the slow query, stare at it with quiet disappointment, then fix the actual cause instead of adding a loading spinner. No buffering here; this isn\'t a VHS tape.'
+    'Nuxt 4 interfaces that feel just as good on a mid-range phone as anywhere else. Accessible, responsive and fast, made with the patience of a handwritten letter.',
+    'NestJS and Drizzle services with strictly typed DTOs, built to be as dependable as the old radio in the kitchen: switch it on and it just works.',
+    'I trace a slow query back to its cause and fix it properly, the old-fashioned way, so nothing ever has to wait.'
   ],
-  latestWritingIntro: 'Half-baked opinions about software, lightly edited to look intentional and filed like snapshots in a shoebox.',
-  ctaTitle: 'Got a story worth developing?',
-  ctaDescription: (email: string) => `Email me at ${email} - I promise to reply faster than a one-hour photo lab.`,
+  latestWritingIntro: 'Notes and reflections on software, kept like letters in a drawer.',
+  ctaTitle: 'Got a story worth telling?',
+  ctaDescription: (email: string) => `Write to me at ${email} - I'll reply as soon as I can, like a letter from an old friend.`,
   aboutIntro:
-    'The story so far, in grainy flashback: banking systems, a laptop that has seen things, and a suspicious number of browser tabs permanently pinned to documentation I should have memorized by now.',
-  experienceIntro: 'Four job titles, one employer, and a steadily rising tolerance for banking acronyms - a career shot in four frames.',
-  educationIntro: 'Two degrees, same university - apparently I liked it enough to stay for round two, like rewatching a favorite film.',
-  blogIntro: 'Writing on web development, APIs, and the things that break in production - dispatches from the darkroom.',
+    'A short story, told the slow way: years around banking systems, a well-worn laptop, and a lasting love of learning how things work.',
+  experienceIntro: 'Four roles at one company, each a new chapter in the same long story.',
+  educationIntro: 'Two degrees at the same university - a place worth returning to, like a favorite old song.',
+  blogIntro: 'Writing on web development, APIs, and lessons learned along the way - pages from a well-loved notebook.',
   blogEmptyTitle: 'Nothing on the shelf yet',
-  blogEmptyDescription: 'The first roll is still in the darkroom.',
-  postCtaTitle: 'Enjoyed this reel?',
-  postCtaDescription: 'I write about what I build. Reach out if you want to talk about it - I\'ll even rewind to the good part.',
-  footerBlurb:
-    'Building things on the internet since before I knew what "production" meant, back when rewinding a tape was the only undo. Still recovering.'
+  blogEmptyDescription: 'The first story is still being written.',
+  postCtaTitle: 'Enjoyed this story?',
+  postCtaDescription: 'I write about what I build. If you would like to talk about it, I would love to hear from you.',
+  footerBlurb: 'Making things for the web, one careful step at a time, with a soft spot for the good old days.'
 }
