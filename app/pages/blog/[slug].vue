@@ -4,6 +4,7 @@ import type { BlogPostDetail } from '~/types/blog'
 
 const route = useRoute()
 const { coverUrl } = useCoverImage()
+const copy = useCopy()
 
 const slug = computed(() => String(route.params.slug))
 
@@ -108,8 +109,8 @@ const publishedAt = computed(() =>
         class="-top-8 right-6"
       />
       <UPageCTA
-        title="Enjoyed this?"
-        description="I write about what I build. Reach out if you want to talk about it."
+        :title="copy.postCtaTitle"
+        :description="copy.postCtaDescription"
         variant="subtle"
         :links="[{ label: 'Get in touch', to: '/#contact', icon: 'i-lucide-mail' }]"
       />

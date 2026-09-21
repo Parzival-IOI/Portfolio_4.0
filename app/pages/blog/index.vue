@@ -3,6 +3,7 @@ import { site } from '~/config/site'
 import type { ApiPage, BlogListItem } from '~/types/blog'
 
 const { coverUrl } = useCoverImage()
+const copy = useCopy()
 
 const PAGE_SIZE = 9
 const page = ref(1)
@@ -32,7 +33,7 @@ useSeoMeta({
 
     <UPageHeader
       title="Blog"
-      description="Writing on web development, APIs, and the things that break in production."
+      :description="copy.blogIntro"
     />
 
     <div class="relative mt-12">
@@ -70,8 +71,8 @@ useSeoMeta({
       <UEmpty
         v-else-if="!data?.items?.length"
         icon="i-lucide-pen-line"
-        title="No posts yet"
-        description="The first one is being written."
+        :title="copy.blogEmptyTitle"
+        :description="copy.blogEmptyDescription"
       />
 
       <template v-else>

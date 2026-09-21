@@ -20,6 +20,8 @@ const educationItems: (TimelineItem & { highlights?: string[] })[] = site.educat
   avatar: item.logo ? { src: item.logo, alt: item.school } : undefined
 }))
 
+const copy = useCopy()
+
 useSeoMeta({
   title: 'About',
   description: site.aboutIntro
@@ -30,13 +32,13 @@ useSeoMeta({
   <div class="relative">
     <UPageHero
       title="About"
-      :description="site.aboutIntro"
+      :description="copy.aboutIntro"
       :ui="{ container: 'py-16 sm:py-20' }"
     />
 
     <UPageSection
       title="Experience"
-      description="Four job titles, one employer, and a steadily rising tolerance for banking acronyms."
+      :description="copy.experienceIntro"
     >
       <div class="mx-auto max-w-2xl">
         <UTimeline
@@ -69,7 +71,7 @@ useSeoMeta({
 
     <UPageSection
       title="Education"
-      description="Two degrees, same university - apparently I liked it enough to stay for round two."
+      :description="copy.educationIntro"
       :ui="{ container: 'pt-0' }"
     >
       <UTimeline

@@ -30,12 +30,21 @@ const navigation = [
 ]
 
 const colorMode = useColorMode()
+const copy = useCopy()
 </script>
 
 <template>
   <UApp>
     <ClientOnly>
       <PokemonRoam />
+    </ClientOnly>
+
+    <!-- Optional background music. Only after a visitor says yes does the song
+         start and the film-camera theme switch on; otherwise none of this shows. -->
+    <ClientOnly>
+      <FilmOverlay />
+      <MusicPrompt />
+      <MusicPill />
     </ClientOnly>
 
     <UHeader :ui="{ root: 'border-default' }">
@@ -123,7 +132,7 @@ const colorMode = useColorMode()
             <div class="space-y-3">
               <AppLogo />
               <p class="text-sm text-muted max-w-xs">
-                {{ site.footerBlurb }}
+                {{ copy.footerBlurb }}
               </p>
             </div>
 

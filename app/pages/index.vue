@@ -10,18 +10,28 @@ const { data: latest } = await useFetch<ApiPage<BlogListItem>>('/api/blog', {
 })
 
 const { coverUrl } = useCoverImage()
+
+// Everyday wording normally, the nostalgic film version while film mode is on.
+const copy = useCopy()
+const services = computed(() => site.services.map((service, i) => ({ ...service, description: copy.value.serviceDescriptions[i] ?? service.description })))
+
+// The hero's glyph rain is blue by default; amber in film mode. Remounted via
+// :key because the rain reads its colors once, when it starts.
+const filmActive = useFilmMode()
+const FILM_RAIN = [0.93, 0.62, 0.22] as [number, number, number]
+const FILM_RAIN_HEAD = [1, 0.82, 0.45] as [number, number, number]
 </script>
 
 <template>
   <div>
     <UPageHero
       :title="site.name"
-      :description="site.tagline"
+      :description="copy.heroTagline"
       orientation="horizontal"
       class="relative isolate"
       :ui="{ title: 'text-5xl sm:text-6xl font-bold tracking-tight', container: 'py-20 sm:py-28' }"
       :links="[{
-        label: 'Read the blog',
+        label: copy.heroBlogButton,
         to: '/blog',
         trailingIcon: 'i-lucide-arrow-right',
         size: 'xl'
@@ -38,7 +48,11 @@ const { coverUrl } = useCoverImage()
     >
       <template #top>
         <ClientOnly>
-          <GlyphRain />
+          <GlyphRain
+            :key="filmActive ? 'film' : 'default'"
+            :color="filmActive ? FILM_RAIN : undefined"
+            :head-color="filmActive ? FILM_RAIN_HEAD : undefined"
+          />
         </ClientOnly>
       </template>
 
@@ -78,14 +92,14 @@ const { coverUrl } = useCoverImage()
 
     <UPageSection
       title="What I do"
-      :description="site.about"
-      :features="site.services"
+      :description="copy.whatIDoIntro"
+      :features="services"
     />
 
     <UPageSection
       v-if="latest?.items?.length"
       title="Latest writing"
-      description="Half-baked opinions about software, lightly edited to look intentional."
+      :description="copy.latestWritingIntro"
       :ui="{ container: 'pt-0' }"
     >
       <UBlogPosts>
@@ -118,8 +132,8 @@ const { coverUrl } = useCoverImage()
         class="-top-17.5 right-10 z-10"
       />
       <UPageCTA
-        title="Have something you want built?"
-        :description="`Email me at ${site.email} - I promise to reply faster than my code compiles.`"
+        :title="copy.ctaTitle"
+        :description="copy.ctaDescription(site.email)"
         variant="subtle"
         :links="[{
           label: 'Get in touch',
